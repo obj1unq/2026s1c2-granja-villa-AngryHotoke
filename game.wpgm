@@ -2,6 +2,7 @@ import wollok.game.*
 import personaje.*
 import cultivos.*
 import direcciones.*
+import herramientas.*
 
 
 program farmville {
@@ -13,7 +14,8 @@ program farmville {
 
 	//  VISUALES
  	game.addVisual(personaje)
-	game.addVisual(contador)
+	// game.addVisual(contadorBaul)
+	// game.addVisual(contadorOro)
 
 	keyboard.a().onPressDo({personaje.mover(izquierda)})
 	keyboard.d().onPressDo({personaje.mover(derecha)})
@@ -24,7 +26,10 @@ program farmville {
 	keyboard.o().onPressDo({personaje.sembrar(new Tomaco(position = personaje.position()))})
 	keyboard.r().onPressDo({personaje.regar()})
 	keyboard.c().onPressDo({personaje.cosechar()})
- 	
+	keyboard.v().onPressDo({personaje.vender()})
+	keyboard.space().onPressDo({personaje.hacerInventario()})
+	keyboard.e().onPressDo({personaje.ponerHerramienta(new Aspersor(position = personaje.position()))})
+	keyboard.q().onPressDo({personaje.activarHerramienta()})
  	//  COMIENZA
 	game.start()
 }

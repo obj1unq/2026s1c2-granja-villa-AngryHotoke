@@ -9,7 +9,10 @@ class Maiz {
 	  image = "corn_adult.png"
 	}
 	method listoParaLaCosecha() {
-	  return image == "corn_adult.png"
+	  return self.image() == "corn_adult.png"
+	}
+	method valor() {
+	  return 150
 	}
 }
 class Trigo {
@@ -41,6 +44,13 @@ class Trigo {
 	method listoParaLaCosecha() {
 	  return self.image() == "wheat_2.png" || self.image() == "wheat_3.png"
 	}
+	method valor() {
+	  if(etapaEvolutiva == 2){
+		return 100
+	  }else{
+		return 200
+	  }
+	}
 }
 class Tomaco {
 
@@ -59,6 +69,9 @@ class Tomaco {
 	}
 	method listoParaLaCosecha() {
 	  return self.image() == "tomaco.png"
+	}
+	method valor() {
+	  return 80
 	}
 }
 
