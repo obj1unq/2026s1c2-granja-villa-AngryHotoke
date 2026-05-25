@@ -3,7 +3,7 @@ import personaje.*
 import cultivos.*
 import direcciones.*
 import herramientas.*
-
+import market.*
 
 program farmville {
 	//  CONFIG	
@@ -14,7 +14,9 @@ program farmville {
 
 	//  VISUALES
  	game.addVisual(personaje)
-	// game.addVisual(contadorBaul)
+	game.addVisual(marketNorte)
+	game.addVisual(marketSur)
+	game.addVisual(contadorBaul)
 	// game.addVisual(contadorOro)
 
 	keyboard.a().onPressDo({personaje.mover(izquierda)})
@@ -28,8 +30,12 @@ program farmville {
 	keyboard.c().onPressDo({personaje.cosechar()})
 	keyboard.v().onPressDo({personaje.vender()})
 	keyboard.space().onPressDo({personaje.hacerInventario()})
-	keyboard.e().onPressDo({personaje.ponerHerramienta(new Aspersor(position = personaje.position()))})
-	keyboard.q().onPressDo({personaje.activarHerramienta()})
- 	//  COMIENZA
+	keyboard.e().onPressDo({
+		const aspersor = new Aspersor(position = personaje.position())
+		personaje.ponerHerramienta(aspersor)
+		aspersor.activarAspersor()
+	})
+
+	//  COMIENZA
 	game.start()
 }

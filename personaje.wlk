@@ -1,9 +1,10 @@
 import wollok.game.*
+import market.*
 
 object personaje {
 	var property position = game.center()
 	const property image = "fplayer.png"
-	var property baul = []
+	const property baul = []
 	var property totalOro = 0
 
 	method mover(direccion) {
@@ -33,7 +34,7 @@ object personaje {
 	  }
 	}
 	method madurar() {
-	  return game.say(self,"...")
+	  return game.say(self,"...ta fria")
 	}
 	method cosechar() {
 	  self.validarCosecha()
@@ -51,13 +52,26 @@ object personaje {
 	}
 	method vender() {
 		self.validarVenta()
-	  totalOro =+ self.valorTotalDelBaul()
-	  self.baul().clear()
+		self.validarPosicionEnElMarket()
+	  totalOro = totalOro + self.valorTotalDelBaul()
+	  self.entregarVerduras(game.uniqueCollider(self))
 	}
 	method validarVenta(){
 		if (self.baul().isEmpty()){
 			self.error("El baul de verduras esta vacio!")
 		}
+	}
+	method validarPosicionEnElMarket() {
+		if(not self.estoyEnElMarket()){
+			self.error("No estoy en el mercado!")
+		}
+	}
+	method estoyEnElMarket() {
+	  return game.getObjectsIn(position).any({market => market.image() == "market.png"})
+	}
+	method entregarVerduras(mercado) {
+	  mercado.efectuarCompra()
+	  self.baul().clear()
 	}
 	method valorTotalDelBaul() {
 	  return self.baul().sum({planta => planta.valor()})
@@ -78,20 +92,20 @@ object personaje {
 		self.error("No puedo poner ninguna herramienta aca!")
 	  }
 	}
-	method activarHerramienta() {
-	  game.uniqueCollider(self).regar()
-	}
+	// method activarHerramienta() {
+	//   game.uniqueCollider(self).regar()
+	// }
 }
-// object contadorBaul {
-//   var property position = game.at(1,0)
+object contadorBaul {
+  var property position = game.at(1,0)
 
-//   method text() {
-// 	return "Planchas cosechadas: " + personaje.baul().sum({planta => planta.valor()})
-//   }
-//   method textColor() {
-// 	return "000000"
-//   }
-// }
+  method text() {
+	return "Valor total de la cosecha: " + personaje.valorTotalDelBaul()
+  }
+  method textColor() {
+	return "000000"
+  }
+}
 // object contadorOro {
 //   var property position = game.at(game.width()-1,0)
 //   method text() {

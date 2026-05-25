@@ -61,6 +61,7 @@ class Tomaco {
 		return "tomaco.png"
 	}
 	method madurar() {
+		
 		if(position.y()==game.height() -1){
 	  position = game.at(self.position().x(), 0)
 		}else{
